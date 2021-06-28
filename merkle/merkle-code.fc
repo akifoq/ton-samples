@@ -1,0 +1,19 @@
+cell end_exotic_cell(builder b, int x) asm "ENDXC";
+(slice, int) begin_parse_exotic(cell c) asm "XCTOS";
+
+_ main(cell c) {
+  int hash = 20929330622017731373016875652302818857369935661888662858110776956703167341303;
+  (slice cs, int exotic?) = begin_parse_exotic(c);
+  throw_unless(42, exotic?);
+  throw_unless(43, cs~load_uint(8) == 3); ;; merkle proof cell
+  throw_unless(44, hash == cs~load_uint(256)); 
+  cell orig' = cs~load_ref();
+  cs = orig'.begin_parse();
+  int x = cs~load_uint(8);
+
+  ;; cell pruned = cs~load_ref();
+  ;; cs = pruned.begin_parse(); ;; "trying to load pruned cell" exception
+  ;; return (x, cs);
+
+  return x;
+}

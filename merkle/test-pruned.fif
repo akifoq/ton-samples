@@ -1,0 +1,38 @@
+"Asm.fif" include
+
+<b b> 1
+{ <b over 8 u, rot ref, b>
+  swap 1+
+} 239 times drop constant tc
+
+<b 17 8 u, tc ref, b> constant orig
+
+// exotic cell type (8 bits)
+// LevelMask (8 bits)
+// Hash_1 = tc representation hash (256 bits)
+// tc depth (16 bits)
+
+<b 1 8 u, 1 8 u, tc hashu 256 u, 239 16 u, b>spec constant pruned
+<b 17 8 u, pruned ref, b> constant orig'
+
+// exotic cell type (8 bits)
+// orig representation hash (256 bits)
+// orig depth (16 bits)
+// reference to pruned tree
+
+<b orig' ref, 3 8 u, orig hashu 256 u, 240 16 u, b>spec constant proof
+
+// note that the correctness of the proof is checked during creation
+// <b orig' ref, 3 8 u, 0 256 u, 240 16 u, b>spec constant proof'
+
+// returns 2
+// proof <{ CDEPTH }>s runvmcode drop . cr
+// doesn't work ( unexpected special cell )
+// proof <{ CTOS SDEPTH }>s runvmcode drop . cr
+// doesn't work ( unexpected special cell (???) )
+// proof <{ XLOAD CTOS SDEPTH }>s runvmcode drop . cr
+// cell remains the same, but -1 returned
+// proof <{ DUP XLOADQ }>s runvmcode drop .s cr
+
+"merkle-code.fif" include <s constant code
+proof 0 code runvmcode drop .s cr
