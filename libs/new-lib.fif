@@ -1,0 +1,27 @@
+#!/usr/bin/env fift -s
+"TonUtil.fif" include
+"Asm.fif" include
+
+"wallet-code.fif" include constant wallet-code
+
+-1 constant wc
+"lib" constant file-base
+
+<{ SETCP0 ACCEPT
+   NEWC ENDC SETCODE
+ }>c constant code
+
+<b b> constant storage
+Libs{ wallet-code public_lib }Libs constant libs
+
+code storage libs <b b{0011} s, 3 roll ref, rot ref, swap dict, b> constant StateInit
+
+StateInit hashu wc swap 2dup 2constant wallet_addr
+."new library address = " 2dup .addr cr
+2dup file-base +".addr" save-address-verbose
+."Non-bounceable address (for init): " 2dup 7 .Addr cr
+
+<b b{1000100} s, wallet_addr addr, b{000011} s, StateInit ref, b{0} s, b> dup constant extmessage
+2 boc+>B
+file-base +"-create.boc" tuck B>file
+."(Saved library creating query to file " type .")" cr
