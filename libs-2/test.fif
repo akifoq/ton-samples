@@ -1,0 +1,21 @@
+"Asm.fif" include
+
+<{ INC }> constant inc_code
+<{ 2 PUSHINT MUL }> constant double_code
+
+PROGRAM{
+  DECLPROC inc
+  DECLPROC double
+  DECLPROC main
+
+  inc PROCLIB:<{ INC }>
+  double double_code PROCLIB
+  main PROC:<{
+    inc CALLDICT
+    double CALLDICT
+  }>
+}END>s dup csr.
+
+inc_code b> add-lib
+double_code b> add-lib
+1 swap runvmdict drop .s

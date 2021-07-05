@@ -1,0 +1,15 @@
+;; Binomial coefficient calculation
+int C(int n, int k) {
+  int res = 1;
+  int i = n;
+  repeat(k) {
+    res *= i;
+    i -= 1;
+  }
+  i = 1;
+  repeat(k) {
+    res /= i;
+    i += 1;
+  }
+  return res;
+}

@@ -1,0 +1,23 @@
+// note that we have edited the envelop
+<{
+  //  n k
+  1 PUSHINT	//  i k res=1
+  OVER	//  i k res=1 k
+  REPEAT:<{	//  i k res
+    s2 PUSH	//  i k res i
+    MUL	//  i k res
+    s0 s2 XCHG	//  res k i
+    DEC	//  res k i
+    s0 s2 XCHG	//  i k res
+  }>
+  s2 POP	//  res k
+  1 PUSHINT	//  res k i=1
+  SWAP	//  res i=1 k
+  REPEAT:<{	//  res i
+    TUCK	//  i res i
+    DIV	//  i res
+    SWAP	//  res i
+    INC	//  res i
+  }>
+  DROP	//  res
+}>

@@ -1,0 +1,21 @@
+"Asm.fif" include
+"lib.fif" include constant libC
+
+PROGRAM{
+  DECLPROC main
+  DECLPROC C
+
+  C libC PROCLIB
+  main PROC:<{
+    DUP	//  n n
+    1 LSHIFT#	//  n _2
+    OVER	//  n _2 n
+    C CALLDICT	//  n _3
+    SWAP	//  _3 n
+    INC	//  _3 _5
+    DIV	//  _6
+  }>
+}END>s constant code
+
+libC b> add-lib
+10 code runvmdict drop .s

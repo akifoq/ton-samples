@@ -1,0 +1,4 @@
+;; calculate n'th Catalan number
+_ main(int n) {
+  return C(2 * n, n) / (n + 1);
+}
