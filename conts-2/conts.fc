@@ -1,0 +1,9 @@
+int execute(cont f, int x) asm(x f) "EXECUTE";
+cell f_code() asm "<{ 3 PUSHINT MUL }>c PUSHREF";
+
+int main(int x) {
+    var cs = f_code().begin_parse();
+    cont f = cs.bless();
+    int y = f.execute(x);
+    return y + 1;
+}

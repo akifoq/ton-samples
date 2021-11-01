@@ -1,0 +1,12 @@
+int execute(cont f, int x) asm(x f) "EXECUTE";
+int f_code_func(int x) inline {
+  return x * 3;
+}
+cell f_code() asm "<{ f_code_func INLINECALL }>c PUSHREF";
+
+int main(int x) {
+    var cs = f_code().begin_parse();
+    cont f = cs.bless();
+    int y = f.execute(x);
+    return y + 1;
+}

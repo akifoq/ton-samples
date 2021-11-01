@@ -1,0 +1,8 @@
+int execute(cont f, int x) asm(x f) "EXECUTE";
+
+int main(int x, cell c) {
+    var cs = c.begin_parse();
+    cont f = cs.bless();
+    int y = f.execute(x);
+    return y + 1;
+}

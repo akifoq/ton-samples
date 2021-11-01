@@ -1,0 +1,5 @@
+"Asm.fif" include
+
+"conts.fif" include <s constant main-code
+
+100 main-code runvmdict drop .s cr

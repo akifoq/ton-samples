@@ -1,0 +1,18 @@
+"Asm.fif" include
+// automatically generated from `stdlib.fc` `conts.fc` 
+PROGRAM{
+  DECLPROC f_code_func
+  DECLPROC main
+  f_code_func PROC:<{
+    //  x
+    3 MULCONST	//  _2
+  }>
+  main PROC:<{
+    //  x
+    <{ f_code_func INLINECALL }>c PUSHREF	//  x _2
+    CTOS	//  x cs
+    BLESS	//  x f
+    EXECUTE	//  y
+    INC	//  _9
+  }>
+}END>c

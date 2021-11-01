@@ -1,0 +1,13 @@
+"Asm.fif" include
+// automatically generated from `stdlib.fc` `conts.fc` 
+PROGRAM{
+  DECLPROC main
+  main PROC:<{
+    //  x
+    <{ 3 PUSHINT MUL }>c PUSHREF	//  x _2
+    CTOS	//  x cs
+    BLESS	//  x f
+    EXECUTE	//  y
+    INC	//  _9
+  }>
+}END>c

@@ -1,0 +1,7 @@
+"Asm.fif" include
+
+"conts.fif" include <s constant main-code
+
+<{ 3 PUSHINT MUL }>c constant f-code
+
+100 f-code main-code runvmdict drop .s cr
