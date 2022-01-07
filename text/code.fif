@@ -1,0 +1,55 @@
+"Asm.fif" include
+// automatically generated from `stdlib.fc` `main.fc` 
+PROGRAM{
+  DECLPROC recv_internal
+  recv_internal PROC:<{
+    //  my_balance msg_value in_msg_cell in_msg
+    s3 POP
+    NIP	//  in_msg in_msg_cell
+    CTOS	//  in_msg cs
+    4 LDU	//  in_msg flags cs
+    LDMSGADDR	//  in_msg flags _61 _60
+    DROP	//  in_msg flags s_addr
+    SWAP
+    1 PUSHINT	//  in_msg s_addr flags _13=1
+    AND	//  in_msg s_addr _14
+    IFJMP:<{	//  in_msg s_addr
+      2DROP	// 
+    }>	//  in_msg s_addr
+    OVER	//  in_msg s_addr in_msg
+    SEMPTY	//  in_msg s_addr _15
+    IFJMP:<{	//  in_msg s_addr
+      2DROP	// 
+    }>	//  in_msg s_addr
+    SWAP	//  s_addr in_msg
+    32 LDU	//  s_addr op in_msg
+    SWAP	//  s_addr in_msg op
+    30 THROWIF
+    <b 124 word try again| $, b> <s PUSHSLICE	//  s_addr in_msg response
+    <b 124 word never gonna give you up| $, b> <s PUSHSLICE	//  s_addr in_msg response _25
+    s1 s2 XCHG	//  s_addr response in_msg _25
+    SDEQ	//  s_addr response _26
+    IF:<{	//  s_addr response
+      DROP	//  s_addr
+      <b 124 word never gonna let you down| $, b> <s PUSHSLICE	//  s_addr response
+    }>	//  s_addr response
+    0 PUSHINT	//  s_addr response _29=0
+    DUP	//  s_addr response _29=0 _30=0
+    24 PUSHINT	//  s_addr response _29=0 _30=0 _31=24
+    NEWC	//  s_addr response _29=0 _30=0 _31=24 _32
+    6 STU	//  s_addr response _29=0 _30=0 _34
+    s0 s4 XCHG2	//  _30=0 response _29=0 _34 s_addr
+    STSLICER	//  _30=0 response _29=0 _35
+    OVER	//  _30=0 response _29=0 _35 _36=0
+    STGRAMS	//  _30=0 response _29=0 _37
+    s1 s3 XCHG	//  _29=0 response _30=0 _37
+    107 STU	//  _29=0 response _51
+    s1 s2 XCHG	//  response _29=0 _51
+    32 STU	//  response _53
+    SWAP	//  _53 response
+    STSLICER	//  msg
+    ENDC	//  _55
+    64 PUSHINT	//  _55 _56=64
+    SENDRAWMSG
+  }>
+}END>c

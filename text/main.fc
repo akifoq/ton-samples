@@ -1,0 +1,36 @@
+int slice_data_equal?(slice s1, slice s2) asm "SDEQ";
+
+slice text::password() asm "<b 124 word never gonna give you up| $, b> <s PUSHSLICE";
+slice text::passed() asm "<b 124 word never gonna let you down| $, b> <s PUSHSLICE";
+slice text::try_again() asm "<b 124 word try again| $, b> <s PUSHSLICE";
+
+() recv_internal(int my_balance, int msg_value, cell in_msg_cell, slice in_msg) impure {
+  var cs = in_msg_cell.begin_parse();
+  var flags = cs~load_uint(4);  ;; int_msg_info$0 ihr_disabled:Bool bounce:Bool bounced:Bool
+  var s_addr = cs~load_msg_addr();
+
+  if (flags & 1) {
+    ;; ignore all other bounced messages
+    return ();
+  }
+  if (in_msg.slice_empty?()) {
+    return ();
+  }
+  int op = in_msg~load_uint(32);
+  throw_if(30, op);
+  slice text = in_msg;
+  slice response = text::try_again();
+  if slice_data_equal?(in_msg, text::password()) {
+    response = text::passed();
+  }
+
+  ;; send response
+  var msg = begin_cell()
+      .store_uint(0x18, 6)
+      .store_slice(s_addr)
+      .store_grams(0)
+      .store_uint(0, 1 + 4 + 4 + 64 + 32 + 1 + 1)
+      .store_uint(0, 32)
+      .store_slice(response);
+  send_raw_message(msg.end_cell(), 64);
+}

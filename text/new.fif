@@ -1,0 +1,23 @@
+#!/usr/bin/fift -s
+"TonUtil.fif" include
+"Asm.fif" include
+
+<{ SETCP0 ACCEPT
+   "code.fif" include PUSHREF SETCODE
+}>c
+
+<b b> // data
+null // no libraries
+
+<b b{0011} s, 3 roll ref, rot ref, swap dict, b>
+
+dup hashu 0 swap 2dup 2constant addr
+."address = " 2dup .addr cr
+."Non-bounceable address (for init): " 2dup 7 .Addr cr
+."Bounceable address (for later access): " 6 .Addr cr
+
+<b b{1000100} s, addr addr, b{000010} s, swap <s s, b{0} s, b>
+
+2 boc+>B
+"query.boc" tuck B>file
+."(Saved creating query to file " type .")" cr
