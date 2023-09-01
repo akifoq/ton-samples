@@ -1,0 +1,41 @@
+global cont lazy_data;
+
+slice begin_parse(cell c) asm "CTOS";
+
+[int, int, int] parse_data(cell c) inline {
+  slice cs = c.begin_parse();
+  return [cs~load_uint(8), cs~load_uint(8), cs~load_uint(8)];
+}
+
+() init_data() impure asm """
+  c4 PUSH
+  <{ SWAP
+     parse_data INLINECALLDICT
+     AGAIN:
+     DUP ROT
+     1 -1 CALLCCARGS SWAP
+  }>CONT 
+  1 -1 SETCONTARGS
+  lazy_data SETGLOB
+""";
+
+[int, int, int] load_data() asm """
+  lazy_data GETGLOB
+  0 -1 CALLCCARGS
+  lazy_data SETGLOB
+""";
+
+int main(int x, int y) {
+  init_data();
+  
+  int sum = 0;
+  if (x == 1) {
+    var [a, b, c] = load_data();
+    sum += a;
+  } 
+  if (y == 1) {
+    var [a, b, c] = load_data();
+    sum += b;
+  }
+  return sum;
+}

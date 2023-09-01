@@ -14,3 +14,9 @@ Various examples of some kind of virtualization in TVM: storing function code in
 
 ## Text
 Deal with strings in FunC relatively convenient.
+
+## callcc
+Implement python-style generator with a continuation.
+
+## callcc-2
+An example of lazy evaluation: parse storage only once and on demand.

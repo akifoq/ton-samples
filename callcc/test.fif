@@ -1,0 +1,14 @@
+"Asm.fif" include
+
+<{ 0 PUSHINT
+   AGAIN:
+   INC DUP ROT
+   1 1 CALLCCARGS SWAP
+}> constant generator
+
+<{ 
+  generator PUSHCONT DUMPSTK
+  0 2 CALLCCARGS DUMPSTK
+  0 2 CALLCCARGS DUMPSTK
+  0 2 CALLCCARGS DUMPSTK
+}>s runvmcode drop .s

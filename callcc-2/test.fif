@@ -1,0 +1,5 @@
+"lazy.fif" include <s constant code
+
+<b 100 8 u, 10 8 u, 1 8 u, b> constant data
+
+1 1 0 code data runvm 2drop .s

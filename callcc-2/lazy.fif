@@ -1,0 +1,50 @@
+"Asm.fif" include
+// automatically generated from `lazy.fc` 
+PROGRAM{
+  DECLPROC parse_data
+  DECLPROC main
+  DECLGLOBVAR lazy_data
+  parse_data PROCINLINE:<{
+    //  c
+    CTOS	//  cs
+    8 LDU	//  _4 cs
+    8 LDU	//  _4 _7 cs
+    8 LDU	//  _4 _7 _18 _17
+    DROP	//  _4 _7 _10
+    TRIPLE	//  _3
+  }>
+  main PROC:<{
+    //  x y
+      c4 PUSH
+      <{ SWAP
+         parse_data INLINECALLDICT
+         AGAIN:
+         s0 s1 PUXC // DUP ROT
+         1 -1 CALLCCARGS SWAP
+      }>CONT 
+      1 -1 SETCONTARGS
+      lazy_data SETGLOB
+    0 PUSHINT	//  x y sum=0
+    s0 s2 XCHG	//  sum=0 y x
+    1 EQINT	//  sum=0 y _6
+    IF:<{	//  sum=0 y
+      NIP	//  y
+        lazy_data GETGLOB
+        0 -1 CALLCCARGS
+        lazy_data SETGLOB	//  y _10
+      UNTRIPLE	//  y _21 _22 _23
+      2DROP	//  y sum
+      SWAP	//  sum y
+    }>	//  sum y
+    1 EQINT	//  sum _14
+    IF:<{	//  sum
+        lazy_data GETGLOB
+        0 -1 CALLCCARGS
+        lazy_data SETGLOB	//  sum _18
+      UNTRIPLE	//  sum _24 _25 _26
+      DROP
+      NIP	//  sum b
+      ADD	//  sum
+    }>	//  sum
+  }>
+}END>c
