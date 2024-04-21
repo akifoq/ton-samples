@@ -20,3 +20,6 @@ Implement python-style generator with a continuation.
 
 ## callcc-2
 An example of lazy evaluation: parse storage only once and on demand.
+
+## asm-optimizations
+Various assembly snippets for (un)common tasks. More efficient in gas than FunC counterparts.

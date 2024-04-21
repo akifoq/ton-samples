@@ -1,0 +1,13 @@
+builder store_dec_number(builder b, int x) asm """
+DUP ISNEG IF:<{ NEGATE x{2d} PUSHSLICE ROT STSLICE SWAP }>
+CONT:<{                                                                                                         
+  UNTIL:<{                                                   
+    10 PUSHINT DIVMOD 
+    48 ADDCONST // b x r                                
+    s2 s2 s0 XC2PU ISZERO // r b x ?
+  }> 
+  DROP DEPTH DEC REPEAT: 8 STU 
+}> 2 1 CALLXARGS 
+""";
+
+() main() { }
